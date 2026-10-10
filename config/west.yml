@@ -8,6 +8,8 @@ manifest:
       url-base: https://github.com/caksoylar
     - name: 4mplelab
       url-base: https://github.com/4mplelab
+    - name: eswai
+      url-base: https://github.com/eswai
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -23,6 +25,9 @@ manifest:
       revision: main
     - name: zmk-feature-charge-indicator
       remote: 4mplelab
+      revision: main
+    - name: zmk-naginata
+      remote: eswai
       revision: main
   self:
     path: config
