@@ -19,6 +19,8 @@
 // ペリフェラル（split経由）のリスナーを有効化
 &peripheral_listener {
     status = "okay";
+    // オートマウス: 左ボールが動いたら 600ms だけレイヤ1(マウス)へ
+    input-processors = <&zip_temp_layer 1 600>;
 };
 
 // セントラルのリスナーを有効化し、deviceを紐付け
@@ -26,7 +28,9 @@
     status = "okay";
     device = <&trackball_central>;
     input-processors = 
-        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
+        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+        // オートマウス: 右ボールが動いたら 600ms だけレイヤ1(マウス)へ
+        <&zip_temp_layer 1 600>;
 
     scroller {
         layers = <2>;
