@@ -87,7 +87,7 @@
                 &kp Q            &kp W              &kp E                 &kp R                   &kp T                                                  &kp Y          &kp U            &kp I              &kp O               &kp P
                 &kp A            &mt LALT S         &mt LSHIFT D          &mt LGUI F              &mt LCTRL G                                            &mt RCTRL H    &mt RGUI J       &mt RSHIFT K       &mt RALT L          &lt L_MARK SEMICOLON
                 &kp Z            &kp X              &kp C                 &kp V                   &kp B                                                  &kp N          &kp M            &kp COMMA          &kp DOT             &kp SLASH
-                &lt L_DEV DELETE &tog L_MOUSE       &lt L_MOUSE TAB       &msc SCRL_UP            &lt L_NUM SPACE   &lt L_MARK ESC      &lt L_MARK BACKSPACE &lt L_NUM ENTER &msc SCRL_UP &kp F7             &kp F10             &lt L_DEV F12 
+                &lt L_DEV DELETE &none              &lt L_MHOLD TAB       &msc SCRL_UP            &lt L_NUM SPACE   &lt L_MARK ESC      &lt L_MARK BACKSPACE &lt L_NUM ENTER &msc SCRL_UP &kp F7             &kp F10             &lt L_DEV F12 
                                                     &msc SCRL_LEFT        &msc SCRL_DOWN          &msc SCRL_RIGHT                                        &msc SCRL_LEFT &msc SCRL_DOWN   &msc SCRL_RIGHT
             >;
             sensor-bindings = <&encoder_msc SCRL_UP SCRL_DOWN>;
@@ -163,15 +163,14 @@
             >;
         };
 
-        layer_7 {
-            status = "reserved";
-            display-name = "Brank Layer";
+        mouse_hold_layer {  // L_MHOLD: Tab を押している間だけ。中身はマウス層と同じ。オートマウスの対象外なので1秒で切れない
+            display-name = "Mouse Hold";
             bindings = <
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans            &trans              &trans           &trans       &trans           &trans             &trans              &trans
-                                                    &trans                &trans                  &trans                                                 &trans       &trans           &trans
+                &trans         &trans         &mkp MCLK      &trans         &trans         &trans         &trans         &mkp MCLK      &trans         &trans
+                &kp LCTRL      &mo L_SCROLL   &mkp RCLK      &mkp LCLK      &trans         &trans         &mkp LCLK      &mkp RCLK      &mo L_SCROLL   &kp RCTRL
+                &kp LSHIFT     &trans         &trans         &trans         &trans         &trans         &trans         &trans         &trans         &kp RSHIFT
+                &trans         &trans         &trans         &trans         &trans         &trans         &trans         &trans         &trans         &trans         &trans         &trans
+                &trans         &trans         &trans         &trans         &trans         &trans
             >;
         };
     };

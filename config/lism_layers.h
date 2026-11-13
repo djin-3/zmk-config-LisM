@@ -14,5 +14,6 @@
 #define L_NAGI   4  /* 薙刀式 */
 #define L_MOUSE  5  /* オートマウス */
 #define L_SCROLL 6  /* マウス層で S / L を押している間のスクロール */
+#define L_MHOLD  7  /* Tab を押している間のマウス層。オートマウスの1秒では切れない */
 
 #endif
