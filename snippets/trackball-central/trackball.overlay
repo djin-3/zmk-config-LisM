@@ -1,3 +1,5 @@
+#include "../../config/lism_layers.h"
+
 / {
     chosen {
         zmk,kscan = &kscan1;
@@ -16,11 +18,32 @@
     };
 };
 
+// オートマウス（zip_temp_layer）の共通設定
+// excluded-positions: マウス層で押しても層を抜けないキーの位置
+//   2=E 7=I（中クリック） 12=D 17=K（右クリック） 13=F 16=J（左クリック）
+//   11=S 18=L（スクロール） 10=A 19=;（Ctrl） 20=Z 29=/（Shift）
+// ここに無いキーを押すと、マウス層はすぐ抜ける（600ms を待たない）
+&zip_temp_layer {
+    excluded-positions = <2 7 10 11 12 13 16 17 18 19 20 29>;
+};
+
 // ペリフェラル（split経由）のリスナーを有効化
 &peripheral_listener {
     status = "okay";
-    // オートマウス: 左ボールが動いたら 600ms だけレイヤ1(マウス)へ
-    input-processors = <&zip_temp_layer 1 600>;
+    // オートマウス: 左ボールが動いたら 600ms だけマウス層へ
+    input-processors = <&zip_temp_layer L_MOUSE 600>;
+
+    // マウス層で S か L を押している間: 左ボールもスクロールにする
+    // 左ボールは左手側で反転済みなので、右ボールのスクロールと向きをそろえるためにもう一度反転する
+    // 最後の zip_temp_layer は、スクロール中もマウス層を切らさないため
+    mouse_scroller {
+        layers = <L_SCROLL>;
+        input-processors =
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+            <&zip_xy_to_scroll_mapper>,
+            <&zip_scroll_scaler 1 16>,
+            <&zip_temp_layer L_MOUSE 600>;
+    };
 };
 
 // セントラルのリスナーを有効化し、deviceを紐付け
@@ -29,11 +52,20 @@
     device = <&trackball_central>;
     input-processors = 
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-        // オートマウス: 右ボールが動いたら 600ms だけレイヤ1(マウス)へ
-        <&zip_temp_layer 1 600>;
+        // オートマウス: 右ボールが動いたら 600ms だけマウス層へ
+        <&zip_temp_layer L_MOUSE 600>;
+
+    // マウス層で S か L を押している間: 右ボールをスクロールにする（向きは数字層の scroller と同じ）
+    mouse_scroller {
+        layers = <L_SCROLL>;
+        input-processors = 
+            <&zip_xy_to_scroll_mapper>,
+            <&zip_scroll_scaler 1 16>,
+            <&zip_temp_layer L_MOUSE 600>;
+    };
 
     scroller {
-        layers = <2>;
+        layers = <L_NUM>;
         input-processors = 
             <&zip_xy_to_scroll_mapper>,
             <&zip_scroll_scaler 1 16>;
