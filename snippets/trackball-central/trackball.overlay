@@ -36,10 +36,11 @@
     // マウス層で S か L を押している間: 左ボールもスクロールにする
     // 左ボールは左手側で反転済みなので、右ボールのスクロールと向きをそろえるためにもう一度反転する
     // 最後の zip_temp_layer は、スクロール中もマウス層を切らさないため
+    // 2026-11-13: スクロールの左右だけ逆にする（ジンの感覚に合わせる）。上下の反転だけ残す
     mouse_scroller {
         layers = <L_SCROLL>;
         input-processors =
-            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+            <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
             <&zip_xy_to_scroll_mapper>,
             <&zip_scroll_scaler 1 16>,
             <&zip_temp_layer L_MOUSE 1000>;
@@ -56,9 +57,11 @@
         <&zip_temp_layer L_MOUSE 1000>;
 
     // マウス層で S か L を押している間: 右ボールをスクロールにする（向きは数字層の scroller と同じ）
+    // 2026-11-13: スクロールの左右だけ逆にする（ジンの感覚に合わせる）
     mouse_scroller {
         layers = <L_SCROLL>;
         input-processors = 
+            <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,
             <&zip_xy_to_scroll_mapper>,
             <&zip_scroll_scaler 1 16>,
             <&zip_temp_layer L_MOUSE 1000>;
